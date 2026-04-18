@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+tr.selected {
+  background-color: #cce7ff !important;
+}
+
+.pack-details {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.song-item {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.song-item h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.song-item p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.difficulties-list {
+  margin-top: 10px;
+}
+
+.difficulties-list li {
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+}
