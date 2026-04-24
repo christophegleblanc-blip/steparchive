@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Sample Pack 2",
+    "numberOfFiles": 15,
+    "difficultyRange": "Medium-Hard",
+    "type": "Remix",
+    "stepartists": "Artist2, Artist3",
+    "download": "https://example.com/download2",
+    "year": 2026,
+    "songs": [
+      {
+        "title": "Remix Song One",
+        "artist": "Original Artist",
+        "bpm": 150,
+        "length": "2:45",
+        "difficulties": [
+          { "level": 10, "type": "Single", "steps": 850 },
+          { "level": 14, "type": "Single", "steps": 1450 },
+          { "level": 11, "type": "Double", "steps": 920 }
+        ]
+      }
+    ]
+  }
+]

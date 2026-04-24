@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Sample Pack 1",
+    "numberOfFiles": 10,
+    "difficultyRange": "Easy-Medium",
+    "type": "Original",
+    "stepartists": "Artist1",
+    "download": "https://example.com/download1",
+    "year": 2025,
+    "songs": [
+      {
+        "title": "Song One",
+        "artist": "Artist A",
+        "bpm": 140,
+        "length": "2:15",
+        "difficulties": [
+          { "level": 5, "type": "Single", "steps": 450 },
+          { "level": 8, "type": "Single", "steps": 680 },
+          { "level": 12, "type": "Single", "steps": 1200 }
+        ]
+      },
+      {
+        "title": "Song Two",
+        "artist": "Artist B",
+        "bpm": 160,
+        "length": "3:00",
+        "difficulties": [
+          { "level": 6, "type": "Single", "steps": 520 },
+          { "level": 9, "type": "Single", "steps": 750 },
+          { "level": 13, "type": "Single", "steps": 1350 },
+          { "level": 10, "type": "Double", "steps": 800 }
+        ]
+      }
+    ]
+  }
+]

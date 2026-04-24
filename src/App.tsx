@@ -1,111 +1,79 @@
-import { useReactTable, getCoreRowModel, getSortedRowModel, getFilteredRowModel, flexRender, createColumnHelper, ColumnDef } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useReactTable, getCoreRowModel, getFilteredRowModel } from '@tanstack/react-table';
+import { useState, useEffect } from 'react';
 import './style.css';
-import { Pack, packsData } from './data';
-
-const columnHelper = createColumnHelper<Pack>();
-
-const columns: ColumnDef<Pack, any>[] = [
-  columnHelper.accessor('name', {
-    header: 'Name',
-    cell: info => info.getValue(),
-  }),
-  columnHelper.accessor('numberOfFiles', {
-    header: 'Number of Files',
-    cell: info => info.getValue(),
-  }),
-  columnHelper.accessor('difficultyRange', {
-    header: 'Difficulty Range',
-    cell: info => info.getValue(),
-  }),
-  columnHelper.accessor('type', {
-    header: 'Type',
-    cell: info => info.getValue(),
-  }),
-  columnHelper.accessor('stepartists', {
-    header: 'Stepartist(s)',
-    cell: info => info.getValue(),
-  }),
-  columnHelper.accessor('download', {
-    header: 'Download',
-    cell: info => <a href={info.getValue()} target="_blank" rel="noopener noreferrer">Download</a>,
-  }),
-];
+import { Pack } from './data';
+import { Tab } from './enums';
+import { columns } from './tableColumns';
+import PadPacks from './components/PadPacks';
+import UploadData from './components/UploadData';
 
 function App() {
   const [selectedPack, setSelectedPack] = useState<Pack | null>(null);
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [selectedYear, setSelectedYear] = useState<number>(2026);
+  const [packsData, setPacksData] = useState<Pack[]>([]);
+  const [activeTab, setActiveTab] = useState<Tab>(Tab.PadPacks);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await import(`./data/${selectedYear}.json`);
+      setPacksData(data.default);
+      setSelectedPack(null); // Reset selection when year changes
+    };
+    loadData();
+  }, [selectedYear]);
 
   const table = useReactTable({
     data: packsData,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
   });
 
   const handleRowClick = (pack: Pack) => {
     setSelectedPack(selectedPack?.name === pack.name ? null : pack);
   };
 
-  return (
-    <div>
-      <h1>Step Archive Packs</h1>
-      <table>
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr
-              key={row.id}
-              onClick={() => handleRowClick(row.original)}
-              className={selectedPack?.name === row.original.name ? 'selected' : ''}
-              style={{ cursor: 'pointer' }}
-            >
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  const selectYear = (year: number) => {
+    setSelectedYear(year);
+  };
 
-      {selectedPack && (
-        <div className="pack-details">
-          <h2>{selectedPack.name} - Songs</h2>
-          <div>
-            {selectedPack.songs.map((song, index) => (
-              <div key={index} className="song-item">
-                <h3>{song.title} by {song.artist}</h3>
-                {song.bpm && <p>BPM: {song.bpm}</p>}
-                {song.length && <p>Length: {song.length}</p>}
-                <h4>Difficulties:</h4>
-                <ul className="difficulties-list">
-                  {song.difficulties.map((diff, diffIndex) => (
-                    <li key={diffIndex}>
-                      Level {diff.level} {diff.type}
-                      {diff.steps && ` - ${diff.steps} steps`}
-                      {diff.freezes && `, ${diff.freezes} freezes`}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
+  return (
+    <div className="app-container">
+      <h1>Stepmania Pack Archive</h1>
+      <div className="nav nav-tabs mb-4">
+        <button
+          onClick={() => setActiveTab(Tab.PadPacks)}
+          className={`nav-link ${activeTab === Tab.PadPacks ? 'active' : ''}`}
+          type="button"
+        >
+          Pad Packs
+        </button>
+        <button
+          onClick={() => setActiveTab(Tab.UploadData)}
+          className={`nav-link ${activeTab === Tab.UploadData ? 'active' : ''}`}
+          type="button"
+        >
+          Upload Data
+        </button>
+      </div>
+
+      {activeTab === Tab.PadPacks ? (
+        <PadPacks
+          selectedYear={selectedYear}
+          selectedPack={selectedPack}
+          globalFilter={globalFilter}
+          table={table}
+          onSelectYear={selectYear}
+          onSetGlobalFilter={setGlobalFilter}
+          onRowClick={handleRowClick}
+        />
+      ) : (
+        <UploadData />
       )}
     </div>
   );
