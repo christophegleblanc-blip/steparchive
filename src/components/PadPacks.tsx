@@ -1,6 +1,5 @@
 import { useReactTable, flexRender } from '@tanstack/react-table';
-import { Pack } from '../data';
-
+import { Pack } from '../types';
 export interface PadPacksProps {
   selectedYear: number;
   selectedPack: Pack | null;
@@ -67,8 +66,8 @@ export default function PadPacks({
             {table.getRowModel().rows.map(row => (
               <tr
                 key={row.id}
-                onClick={() => onRowClick(row.original)}
-                className={selectedPack?.name === row.original.name ? 'selected' : ''}
+                onClick={() => onRowClick(row.original as Pack)}
+                className={selectedPack?.name === (row.original as Pack).name ? 'selected' : ''}
                 style={{ cursor: 'pointer' }}
               >
                 {row.getVisibleCells().map(cell => (
@@ -97,9 +96,7 @@ export default function PadPacks({
                     <ul className="difficulties-list list-group list-group-flush">
                       {song.difficulties.map((diff, diffIndex) => (
                         <li key={diffIndex} className="list-group-item">
-                          Level {diff.level} {diff.type}
-                          {diff.steps && ` - ${diff.steps} steps`}
-                          {diff.freezes && `, ${diff.freezes} freezes`}
+                          Difficulty {diff.level} {diff.type}
                         </li>
                       ))}
                     </ul>

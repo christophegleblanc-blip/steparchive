@@ -1,5 +1,5 @@
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
-import { Pack } from './data';
+import { Pack } from './types';
 import { ColumnHeader } from './enums';
 
 const columnHelper = createColumnHelper<Pack>();

@@ -14,9 +14,9 @@
         "bpm": 150,
         "length": "2:45",
         "difficulties": [
-          { "level": 10, "type": "Single", "steps": 850 },
-          { "level": 14, "type": "Single", "steps": 1450 },
-          { "level": 11, "type": "Double", "steps": 920 }
+          { "level": 10, "type": "Single" },
+          { "level": 14, "type": "Single" },
+          { "level": 11, "type": "Double" }
         ]
       }
     ]

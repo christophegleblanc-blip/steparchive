@@ -1,11 +1,12 @@
 import { useReactTable, getCoreRowModel, getFilteredRowModel } from '@tanstack/react-table';
 import { useState, useEffect } from 'react';
+// @ts-ignore
 import './style.css';
-import { Pack } from './data';
 import { Tab } from './enums';
 import { columns } from './tableColumns';
 import PadPacks from './components/PadPacks';
 import UploadData from './components/UploadData';
+import { Pack } from './types';
 
 function App() {
   const [selectedPack, setSelectedPack] = useState<Pack | null>(null);

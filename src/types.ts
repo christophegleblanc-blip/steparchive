@@ -1,9 +1,7 @@
 export interface Difficulty {
   level: number;
   type: string; // e.g., 'Single', 'Double', 'Half-Double'
-  steps?: number;
-  freezes?: number;
-  // Add other difficulty-specific properties as needed
+  difficulty?: string; // e.g., 'Beginner', 'Basic', 'Difficult', 'Expert', 'Challenge'
 }
 
 export interface Song {
@@ -17,10 +15,10 @@ export interface Song {
 export interface Pack {
   name: string;
   numberOfFiles: number;
-  difficultyRange: string;
-  type: string;
-  stepartists: string;
-  download: string;
+  difficultyRange?: string;
+  type?: string;
+  stepartists?: string;
+  download?: string;
   year: number;
   songs: Song[];
 }
