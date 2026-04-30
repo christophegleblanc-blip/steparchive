@@ -7,7 +7,7 @@ export interface Difficulty {
 export interface Song {
   title: string;
   artist: string;
-  bpm?: number;
+  bpm?: string;
   length?: string; // e.g., '2:30'
   difficulties: Difficulty[];
 }

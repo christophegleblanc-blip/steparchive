@@ -4,7 +4,7 @@ Specifications for pack upload:
 Pack Structure:
 ------------------------------------
 
-A Pack is a collection of songs for the rhythm game StepMania. These packs are usually in a zip or rar format.
+A Pack is a collection of songs for the rhythm game StepMania.
 Within this zip is the main folder of the pack, which contains the name of the pack.
 In the main pack folder is a series of folders which contain data for each song in the pack.
 Each song folder contains various files required to play in StepMania. 
@@ -74,6 +74,39 @@ This song data should be mapped to the difficulty interface defined in types.ts
 METER is level
 STEPSTYPE is type
 DIFFICULTY is difficulty
+
+once we have all this data, we should have our pack object filled in with the songs, difficulties, and other attributes.
+We now want to append this data to its associated year json, i.e. 2025.json.
+
+------------------------------------
+.sm file format:
+------------------------------------
+
+If .ssc file is not present in the folder, we use the .sm file. Again if neither are present, we skip the folder.
+Like .ssc, the first section of the file contains general song information, similarly delimited:
+#TITLE:song2;
+With '#' being the starting identifier for the attribute and ';' being the end marker.
+For now, we only care about the TITLE, ARTIST and BPMS fields.
+These fields should be mapped into the Song interface defined in types.ts:
+TITLE is title
+ARTIST is artist
+BPMS is bpm
+Length we currently put a dummy value, i.e. 2:30
+difficulties we will fill using the next section.
+
+like .ssc files, each chart begins with #NOTES:, however the entire data is kept within the notes section.
+This means there won't be a semicolon ';' to indicate the end until all the data is read.
+The first 5 lines of this section looks like this:
+#NOTES:
+     dance-single:
+     :
+     Hard:
+     8:
+followed by note data.
+This song data should be mapped to the difficulty interface defined in types.ts
+The second line (dance-single) is type,
+the fourth line (Hard) is difficulty,
+the fifth line (8) is level.
 
 once we have all this data, we should have our pack object filled in with the songs, difficulties, and other attributes.
 We now want to append this data to its associated year json, i.e. 2025.json.
